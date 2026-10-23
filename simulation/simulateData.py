@@ -4,6 +4,7 @@
 import time
 from datetime import datetime
 import random
+from pathlib import Path
 
 #-----------------------FUNÇÕES UTILIZADAS-----------------------#
 
@@ -31,7 +32,8 @@ def dado_especifico(linha, n):
 
 #-------INFORMAÇÕES SOBRE A REPETIÇÃO E O INTERVALO DE TEMPO-------#
 
-nome_arquivo = "/Users/kauad/OneDrive/Documentos/Universidade Federal de Minas Gerais/CEMTEC/Automatizacao_estacao_solarimetrica/simulation/simulatedData.txt"
+# Caminho até o SimulatedData
+path_file_simulated_data = Path(__file__).resolve().parent / "simulatedData.txt"
 
 #Quantos segundos total é para o programa rodar
 while True:
@@ -55,7 +57,7 @@ quantidade_lacos = round(tempo_total/intervalo_tempo)
 #-------------COLETA DOS DADOS E INSERÇÃO NA SIMULAÇÃO-------------#
 
 #Record atual antes de iniciar o laço de repetição
-ultima_linha = coletar_ultima_linha(nome_arquivo)
+ultima_linha = coletar_ultima_linha(path_file_simulated_data)
 ultimo_record = int(dado_especifico(ultima_linha, 2))
 
 #Inicializar as variáveis
@@ -65,8 +67,8 @@ for i in range(quantidade_lacos):
     
     #Timestamp
     data_e_hora = str((datetime.now()).replace(microsecond=0))
-
-    #Record
+    
+    #Record20
     record = ultimo_record + 1
     ultimo_record = record
     records_lista.append(record)
@@ -132,7 +134,7 @@ for i in range(quantidade_lacos):
 
     #-------------------ADICIONAR A LINHA NO ARQUIVO------------------#
 
-    file = open(nome_arquivo, "a", encoding="UTF-8")
+    file = open(path_file_simulated_data, "a", encoding="UTF-8")
     file.write(linha_nova)
     file.close()
 
